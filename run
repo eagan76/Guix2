@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Step 1: Set up Guix environment variables
+echo "Configuring Guix environment variables..."
+echo 'export PATH="$HOME/.config/guix/current/bin:$PATH"' >> ~/.bashrc
+echo 'source "$HOME/.guix-profile/etc/profile"' >> ~/.bashrc
+source ~/.bashrc
+
+# Step 2: Start the Guix daemon
+echo "Starting the Guix daemon..."
+sudo guix-daemon --build-users-group=guixbuild &
+
+# Step 3: Verify that Guix is in the PATH
+echo "Verifying Guix setup..."
+if command -v guix &> /dev/null; then
+    echo "Guix is set up successfully. Version: $(guix --version)"
+else
+    echo "Guix setup failed or Guix is not in the PATH."
+fi
+
+echo "Guix daemon setup complete. Please restart your terminal or run 'source ~/.bashrc' to finalize environment variables."
